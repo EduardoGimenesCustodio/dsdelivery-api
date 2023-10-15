@@ -1,4 +1,4 @@
 export enum OrderStatusEnum {
-  PENDING = 'PENDING',
-  DELIVERED = 'DELIVERED',
+  PENDING = 0,
+  DELIVERED = 1,
 }
