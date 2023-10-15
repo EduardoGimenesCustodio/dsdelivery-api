@@ -14,7 +14,7 @@ export class OrdersService {
     private orderRepository: Repository<OrderModel>,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto): Promise<OrderModel> {
+  async create(createOrderDto: CreateOrderDto): Promise<OrderEntity> {
     try {
       return await this.orderRepository.save({
         ...createOrderDto,
@@ -37,6 +37,18 @@ export class OrdersService {
   async findOne(id: number): Promise<OrderEntity> {
     try {
       return await this.orderRepository.findOneBy({ id });
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async setDelivered(id: number): Promise<OrderEntity> {
+    try {
+      await this.orderRepository.update(id, {
+        status: OrderStatusEnum.DELIVERED,
+      });
+
+      return await this.findOne(id);
     } catch (err) {
       throw new Error(err);
     }

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -21,11 +22,11 @@ export class OrdersController {
   ) {}
 
   @Post()
-  async create(@Body() createOrderDto: CreateOrderDto): Promise<void> {
+  async create(@Body() createOrderDto: CreateOrderDto): Promise<OrderEntity> {
     const order = await this.ordersService.create(createOrderDto);
     const orderId = order.id;
 
-    if (!createOrderDto.products) return;
+    if (!createOrderDto.products) return order;
 
     const products = createOrderDto.products;
     await Promise.all(
@@ -38,7 +39,7 @@ export class OrdersController {
       }),
     );
 
-    return;
+    return order;
   }
 
   @Get()
@@ -51,6 +52,11 @@ export class OrdersController {
   async findOne(@Param('id') id: string): Promise<OrderEntity> {
     const order = await this.ordersService.findOne(+id);
     return order;
+  }
+
+  @Put(':id/delivered')
+  async setDelivered(@Param('id') id: string): Promise<OrderEntity> {
+    return await this.ordersService.setDelivered(+id);
   }
 
   @Patch(':id')
