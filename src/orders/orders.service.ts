@@ -13,9 +13,9 @@ export class OrdersService {
     private orderRepository: Repository<OrderModel>,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto): Promise<void> {
+  async create(createOrderDto: CreateOrderDto): Promise<OrderModel> {
     try {
-      await this.orderRepository.save(createOrderDto);
+      return await this.orderRepository.save(createOrderDto);
     } catch (err) {
       throw new Error(err);
     }
