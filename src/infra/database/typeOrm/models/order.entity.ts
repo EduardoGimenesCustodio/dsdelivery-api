@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderProductModel } from './order-product.entity';
-import { OrderStatusEnum } from './order-status.enum';
+import { OrderStatusEnum } from '../../../../orders/entities/order-status.enum';
 
 @Entity('tb_order')
 export class OrderModel {

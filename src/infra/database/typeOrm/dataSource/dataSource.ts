@@ -14,8 +14,5 @@ export default new DataSource({
   password: configs.database.password,
   database: configs.database.name,
   entities: ['./src/infra/database/typeOrm/models/**/*.ts'],
-  migrations: [
-    './src/infra/database/typeOrm/migrations/*.ts',
-    './src/infra/database/typeOrm/seeds/*.ts',
-  ],
+  migrations: ['./src/infra/database/typeOrm/migrations/*.ts'],
 });
