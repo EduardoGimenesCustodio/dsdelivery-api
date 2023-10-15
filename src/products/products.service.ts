@@ -24,7 +24,10 @@ export class ProductsService {
   async findAll(): Promise<ProductEntity[]> {
     try {
       return (await this.productRepository.find()).map((product) => {
-        return { ...product, imageUri: product.image_uri };
+        const imageUri = product.image_uri;
+        delete product.image_uri;
+
+        return { ...product, imageUri };
       });
     } catch (err) {
       throw new Error(err);
@@ -34,8 +37,10 @@ export class ProductsService {
   async findOne(id: number): Promise<ProductEntity> {
     try {
       const product = await this.productRepository.findOneBy({ id });
+      const imageUri = product.image_uri;
+      delete product.image_uri;
 
-      return { ...product, imageUri: product.image_uri };
+      return { ...product, imageUri };
     } catch (err) {
       throw new Error(err);
     }
