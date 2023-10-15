@@ -5,6 +5,7 @@ import { OrderModel } from 'src/infra/database/typeOrm/models/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OrderEntity } from './entities/order.entity';
+import { OrderStatusEnum } from './entities/order-status.enum';
 
 @Injectable()
 export class OrdersService {
@@ -15,7 +16,11 @@ export class OrdersService {
 
   async create(createOrderDto: CreateOrderDto): Promise<OrderModel> {
     try {
-      return await this.orderRepository.save(createOrderDto);
+      return await this.orderRepository.save({
+        ...createOrderDto,
+        status: OrderStatusEnum.PENDING,
+        moment: new Date(),
+      });
     } catch (err) {
       throw new Error(err);
     }
