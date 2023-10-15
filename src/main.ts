@@ -10,8 +10,8 @@ async function bootstrap() {
   const port = configService.get<number>('port');
 
   const config = new DocumentBuilder()
-    .setTitle('Bidding Process Extractor')
-    .setDescription('The Bidding Process Extractor API description')
+    .setTitle('DS Delivery')
+    .setDescription('The DS Delivery API description')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
